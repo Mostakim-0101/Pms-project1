@@ -1,0 +1,211 @@
+/* =================================================
+   RESET & TOKENS (kept structure; added variables)
+   ================================================= */
+:root{
+  --brand-700:#004080;       /* headings */
+  --brand-600:#0066cc;       /* links/buttons */
+  --brand-700-dk:#004999;    /* hover */
+  --danger:#cc0000;
+  --danger-dk:#990000;
+  --ink:#333;
+  --bg-grad-from:#e6f0ff;
+  --bg-grad-to:#f8fbff;
+  --card:#ffffff;
+  --radius:12px;
+  --shadow-md:0 6px 15px rgba(0,0,0,.10);
+  --shadow-lg:0 10px 24px rgba(0,0,0,.12);
+  --ring:0 0 0 3px rgba(0,102,204,.25);
+}
+
+/* Reset some defaults */
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* =========================================
+   GLOBAL
+   ========================================= */
+html { -webkit-text-size-adjust:100%; }
+body{
+  font-family:"Segoe UI", Arial, sans-serif;
+  color:var(--ink);
+  background:linear-gradient(to right, var(--bg-grad-from), var(--bg-grad-to));
+  line-height:1.6; /* better readability */
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* =========================================
+   CONTAINER
+   ========================================= */
+.container{
+  width:min(420px, 92vw);          /* responsive width; default was 400px */
+  margin: clamp(32px, 6vh, 72px) auto;
+  background:var(--card);
+  padding: clamp(22px, 3.5vw, 32px);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-md);
+  text-align:center;
+  border:1px solid rgba(0,0,0,.05); /* subtle edge */
+}
+
+/* Hover lift on large screens only */
+@media (hover:hover){
+  .container:hover{ box-shadow:var(--shadow-lg); transform:translateY(-1px); transition:.2s ease; }
+}
+
+/* =========================================
+   HEADINGS
+   ========================================= */
+h1{
+  font-size: clamp(24px, 2.8vw, 28px);
+  margin-bottom: 16px;
+  color:var(--brand-700);
+  letter-spacing:.2px;
+  font-weight:700;
+}
+h2{
+  font-size: clamp(18px, 2.2vw, 21px);
+  margin-bottom: 18px;
+  color:var(--brand-600);
+  font-weight:700;
+}
+
+/* =========================================
+   FORMS
+   ========================================= */
+form{ display:flex; flex-direction:column; gap:16px; }
+
+input, select{
+  padding:12px 14px;
+  border:1px solid #cfcfcf;
+  border-radius:8px;
+  font-size:15px;
+  outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+  background:#fff;
+  caret-color:var(--brand-600);
+}
+input:hover, select:hover{ border-color:#b7b7b7; }
+input:focus, select:focus{
+  border-color:var(--brand-600);
+  box-shadow: var(--ring);
+}
+::placeholder{ color:#9aa3ad; }
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+button, .btn{
+  background:var(--brand-600);
+  color:#fff;
+  padding:12px 16px;
+  border:none;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
+  box-shadow:0 2px 8px rgba(0,102,204,.20);
+}
+button:hover, .btn:hover{ background:var(--brand-700-dk); }
+button:active, .btn:active{ transform:translateY(1px); }
+button:focus-visible, .btn:focus-visible{ outline:none; box-shadow:var(--ring); }
+
+/* Links styled like buttons keep your original look */
+.btn{
+  display:block;
+  margin:10px auto;
+  width:80%;
+  text-decoration:none;
+  text-align:center;
+  line-height:1.2;
+}
+
+/* Danger variant (logout) */
+.logout{ background:var(--danger); }
+.logout:hover{ background:var(--danger-dk); }
+
+/* Disabled state (optional—doesn’t change structure) */
+button[disabled], .btn[aria-disabled="true"]{
+  opacity:.6; cursor:not-allowed; box-shadow:none;
+}
+
+/* =========================================
+   LINKS
+   ========================================= */
+a{ color:var(--brand-600); text-decoration:none; font-weight:500; }
+a:hover{ text-decoration:underline; }
+
+/* =========================================
+   TABLES
+   ========================================= */
+table{
+  width:min(1000px, 94%);
+  margin: 20px auto;
+  border-collapse:collapse;
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  table-layout: fixed; /* prevents wobble & truncation nicer with ellipsis */
+}
+th, td{
+  padding:14px 12px;
+  border-bottom:1px solid #e6e6e6;
+  text-align:center;
+  word-wrap:break-word;
+}
+th{
+  background:var(--brand-600);
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+}
+tr:nth-child(even){ background:#f4f8ff; }
+
+/* Compact table on very small screens */
+@media (max-width:480px){
+  th, td{ padding:12px 8px; font-size:14px; }
+}
+
+/* =========================================
+   MESSAGES
+   ========================================= */
+.success{ color:#1f8a1f; margin-top:10px; font-weight:600; }
+.error{ color:#d11a2a; margin-top:10px; font-weight:600; }
+
+/* =========================================
+   LANDING PAGE
+   ========================================= */
+.landing-container{
+  display:flex; justify-content:center; align-items:center;
+  height:100dvh; /* mobile-safe height */
+  padding: 24px; /* keeps card off edges on phones */
+  background:linear-gradient(to right, var(--bg-grad-from), var(--bg-grad-to));
+}
+.card{
+  background:#fff;
+  padding: clamp(24px, 4vw, 34px);
+  border-radius:15px;
+  text-align:center;
+  width:min(420px, 94vw); /* slight bump from 380 to breathe */
+  box-shadow:var(--shadow-md);
+  border:1px solid rgba(0,0,0,.06);
+}
+.card h1{
+  margin:15px 0;
+  color:var(--brand-700);
+  font-size:22px;
+}
+.app-image{
+  width:min(220px, 60vw);
+  max-width:220px;
+  margin-bottom:15px;
+  object-fit:contain;
+}
+
+/* =========================================
+   REDUCED MOTION FRIENDLY
+   ========================================= */
+@media (prefers-reduced-motion:reduce){
+  *{ transition:none !important; }
+}
