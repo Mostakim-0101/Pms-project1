@@ -1,0 +1,42 @@
+name: PHP Lint (pms5)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo_mysql, mysqli
+          coverage: none
+
+      # Optional: install Composer deps if you have composer.json
+      - name: Install Composer (if composer.json exists)
+        if: hashFiles('composer.json') != ''
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php composer-setup.php --quiet
+          php -r "unlink('composer-setup.php');"
+          php composer.phar install --no-interaction --prefer-dist
+
+      # Lint all PHP files (syntax only, no runtime/DB needed)
+      - name: PHP syntax check (pms5)
+        run: |
+          if [ -d "pms5" ]; then
+            find pms5 -type f -name "*.php" -print0 | xargs -0 -n1 -P4 php -l
+          else
+            echo "pms5 directory not found" && exit 1
+          fi
+
+      # Quick sanity: ensure your index exists
+      - name: Ensure index exists
+        run: test -f pms5/index.php || (echo "Missing pms5/index.php" && exit 1)
