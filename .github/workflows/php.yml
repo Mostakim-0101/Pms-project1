@@ -1,0 +1,21 @@
+name: PHP Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+
+    - name: Validate PHP
+      run: php -l index.php
+
+    - name: Run PHPUnit tests
+      run: vendor/bin/phpunit --configuration phpunit.xml
